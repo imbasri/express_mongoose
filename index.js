@@ -3,6 +3,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
+
+
+
+// Models 
+
+const Product = require('./models/product')
+
+
 // connect to mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/shop_db').then((_res) => {
   console.log('connected to db')
@@ -13,9 +21,17 @@ app.set('view engine', 'ejs');
 
 
 //router
-app.get('/',(_req,res)=>{
+app.get('/', (_req, res) => {
   res.send('Hello World')
 })
+
+app.get('/products', async (_req, res) => {
+  const products = await Product.find({})
+  console.log(products)
+  res.render('products/index', { products })
+})
+
+
 
 // listen server
 const port = process.env.PORT || 5000;
