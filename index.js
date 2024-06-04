@@ -1,9 +1,11 @@
 const path = require("path");
 const express = require("express");
-const methodOverride = require("method-override");
 const app = express();
+const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 
+// logger with morgan
+const morgan = require("morgan");
 // Models
 
 const Product = require("./models/product");
@@ -22,6 +24,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(morgan("dev"));
 // connect to mongodb
 mongoose
   .connect("mongodb://127.0.0.1:27017/shop_db")
